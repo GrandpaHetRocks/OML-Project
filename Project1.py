@@ -20,7 +20,7 @@ import matplotlib.pyplot as plt
 
 class Arguments():
     def __init__(self):
-        self.images = 10000
+        self.images = 1000
         self.clients = 1
         self.rounds = 200
         self.epochs = 2
