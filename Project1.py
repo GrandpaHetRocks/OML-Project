@@ -46,6 +46,7 @@ loss = criterion(logps, labels)
 optimizer = optim.Adam(model.parameters(), lr=0.1)
 
 epochs = 2
+ac=[]
 for round in range(100):
     time0 = time()
     for e in range(epochs):
@@ -90,3 +91,6 @@ for round in range(100):
     
     print("Number Of Images Tested =", all_count)
     print("\nModel Accuracy =", (correct_count/all_count))
+    ac.append((correct_count/all_count))
+
+print(ac)
