@@ -44,47 +44,49 @@ loss = criterion(logps, labels)
 
 
 optimizer = optim.Adam(model.parameters(), lr=0.1)
-time0 = time()
+
 epochs = 2
-for e in range(epochs):
-    running_loss = 0
-    for images, labels in trainloader:
-        # Flatten MNIST images into a 784 long vector
-        images = images.view(images.shape[0], -1)
+for round in range(100):
+    time0 = time()
+    for e in range(epochs):
+        running_loss = 0
+        for images, labels in trainloader:
+            # Flatten MNIST images into a 784 long vector
+            images = images.view(images.shape[0], -1)
+        
+            # Training pass
+            optimizer.zero_grad()
+            
+            output = model(images)
+            loss = criterion(output, labels)
+            
+            #This is where the model learns by backpropagating
+            loss.backward()
+            
+            #And optimizes its weights here
+            optimizer.step()
+            
+            running_loss += loss.item()
+        else:
+            print("Epoch {} - Training loss: {}".format(e, running_loss/len(trainloader)))
+    print("\nTraining Time (in minutes) =",(time()-time0)/60)
     
-        # Training pass
-        optimizer.zero_grad()
-        
-        output = model(images)
-        loss = criterion(output, labels)
-        
-        #This is where the model learns by backpropagating
-        loss.backward()
-        
-        #And optimizes its weights here
-        optimizer.step()
-        
-        running_loss += loss.item()
-    else:
-        print("Epoch {} - Training loss: {}".format(e, running_loss/len(trainloader)))
-print("\nTraining Time (in minutes) =",(time()-time0)/60)
-
-correct_count, all_count = 0, 0
-for images,labels in valloader:
-  for i in range(len(labels)):
-    img = images[i].view(1, 784)
-    # Turn off gradients to speed up this part
-    with torch.no_grad():
-        logps = model(img)
-
-    # Output of the network are log-probabilities, need to take exponential for probabilities
-    ps = torch.exp(logps)
-    probab = list(ps.numpy()[0])
-    pred_label = probab.index(max(probab))
-    true_label = labels.numpy()[i]
-    if(true_label == pred_label):
-      correct_count += 1
-    all_count += 1
-
-print("Number Of Images Tested =", all_count)
-print("\nModel Accuracy =", (correct_count/all_count))
+    correct_count, all_count = 0, 0
+    for images,labels in valloader:
+      for i in range(len(labels)):
+        img = images[i].view(1, 784)
+        # Turn off gradients to speed up this part
+        with torch.no_grad():
+            logps = model(img)
+    
+        # Output of the network are log-probabilities, need to take exponential for probabilities
+        ps = torch.exp(logps)
+        probab = list(ps.numpy()[0])
+        pred_label = probab.index(max(probab))
+        true_label = labels.numpy()[i]
+        if(true_label == pred_label):
+          correct_count += 1
+        all_count += 1
+    
+    print("Number Of Images Tested =", all_count)
+    print("\nModel Accuracy =", (correct_count/all_count))
