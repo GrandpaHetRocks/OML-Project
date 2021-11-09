@@ -70,28 +70,28 @@ for round in range(1):
             running_loss += loss.item()
         else:
             print("Epoch {} - Training loss: {}".format(e, running_loss/len(trainloader)))
-    print("\nTraining Time (in minutes) =",(time()-time0)/60)
+    #print("\nTraining Time (in minutes) =",(time()-time0)/60)
     
-    correct_count, all_count = 0, 0
-    for images,labels in valloader:
-      for i in range(len(labels)):
-        img = images[i].view(1, 784)
-        # Turn off gradients to speed up this part
-        with torch.no_grad():
-            logps = model(img)
-    
-        # Output of the network are log-probabilities, need to take exponential for probabilities
-        ps = torch.exp(logps)
-        probab = list(ps.numpy()[0])
-        pred_label = probab.index(max(probab))
-        true_label = labels.numpy()[i]
-        if(true_label == pred_label):
-          correct_count += 1
-        all_count += 1
-    
-    print("Number Of Images Tested =", all_count)
-    print("\nModel Accuracy =", (correct_count/all_count))
-    ac.append((correct_count/all_count))
-    print(round)
+        correct_count, all_count = 0, 0
+        for images,labels in valloader:
+          for i in range(len(labels)):
+            img = images[i].view(1, 784)
+            # Turn off gradients to speed up this part
+            with torch.no_grad():
+                logps = model(img)
+        
+            # Output of the network are log-probabilities, need to take exponential for probabilities
+            ps = torch.exp(logps)
+            probab = list(ps.numpy()[0])
+            pred_label = probab.index(max(probab))
+            true_label = labels.numpy()[i]
+            if(true_label == pred_label):
+              correct_count += 1
+            all_count += 1
+        
+        print("Number Of Images Tested =", all_count)
+        print("\nModel Accuracy =", (correct_count/all_count))
+        ac.append((correct_count/all_count))
+        print(round)
 
 print(ac)
