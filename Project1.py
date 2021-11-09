@@ -23,7 +23,7 @@ valloader = torch.utils.data.DataLoader(valset, batch_size=64, shuffle=True)
 print(trainset)
 # Layer details for the neural network
 input_size = 784
-hidden_sizes = [100, 150]
+hidden_sizes = [10, 15]
 output_size = 10
 
 # Build a feed-forward network
@@ -45,9 +45,9 @@ loss = criterion(logps, labels)
 
 optimizer = optim.Adam(model.parameters(), lr=0.01)
 
-epochs = 2
+epochs = 20
 ac=[]
-for round in range(100):
+for round in range(1):
     time0 = time()
     for e in range(epochs):
         running_loss = 0
