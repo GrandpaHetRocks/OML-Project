@@ -23,7 +23,7 @@ valloader = torch.utils.data.DataLoader(valset, batch_size=64, shuffle=True)
 print(trainset)
 # Layer details for the neural network
 input_size = 784
-hidden_sizes = [128, 64]
+hidden_sizes = [10, 15]
 output_size = 10
 
 # Build a feed-forward network
