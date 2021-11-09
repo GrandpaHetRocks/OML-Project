@@ -25,7 +25,7 @@ class Arguments():
         self.rounds = 1
         self.epochs = 200
         self.local_batches = 64
-        self.lr = 0.007
+        self.lr = 0.003
         self.torch_seed = 0 #same weights and parameters whenever the program is run
         self.log_interval = 64
         self.iid = 'iid'
@@ -83,9 +83,6 @@ for inx, client in enumerate(clients):  #return actual image set for each client
 for round in range(1,args.rounds+1):
     for epoch in range(1, args.epochs + 1):
         for batch_idx, (data, target) in enumerate(client['trainset']): 
-            data,target=data,target
-            # data = data.send(client['hook'])
-            # target = target.send(client['hook'])
             
             #train model on client
             data, target = data.to(device), target.to(device) #send data to cpu/gpu (data is stored locally)
@@ -100,20 +97,20 @@ for round in range(1,args.rounds+1):
                     "client1",
                     epoch, batch_idx * args.local_batches, len(client['trainset']) * args.local_batches, 
                     100. * batch_idx / len(client['trainset']), loss))
-    client['model'].eval()    #no need to train the model while testing
-    test_loss = 0
-    correct = 0
-    with torch.no_grad():
-        for data, target in global_test_loader:
-            if(use_cuda):
-                data,target=data.cuda(),target.cuda()
-                #model.cuda()
-            else:
-                data, target = data.to(device), target.to(device)
-            output = client['model'](data)
-            test_loss += F.nll_loss(output, target, reduction='sum').item() # sum up batch loss
-            pred = output.argmax(1, keepdim=True) # get the index of the max log-probability 
-            correct += pred.eq(target.view_as(pred)).sum().item()
+        client['model'].eval()    #no need to train the model while testing
+        test_loss = 0
+        correct = 0
+        with torch.no_grad():
+            for data, target in global_test_loader:
+                if(use_cuda):
+                    data,target=data.cuda(),target.cuda()
+                    #model.cuda()
+                else:
+                    data, target = data.to(device), target.to(device)
+                output = client['model'](data)
+                test_loss += F.nll_loss(output, target, reduction='sum').item() # sum up batch loss
+                pred = output.argmax(1, keepdim=True) # get the index of the max log-probability 
+                correct += pred.eq(target.view_as(pred)).sum().item()
 
     test_loss /= len(global_test_loader.dataset)
 
