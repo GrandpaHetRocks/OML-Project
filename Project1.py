@@ -38,7 +38,7 @@ class Arguments():
  
 args = Arguments()
 
-use_cuda = True
+use_cuda = False
 device = torch.device("cuda:0" if use_cuda else "cpu")
 kwargs = {'num_workers': 1, 'pin_memory': True} if use_cuda else {}
 
