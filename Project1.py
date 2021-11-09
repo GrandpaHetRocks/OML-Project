@@ -44,7 +44,7 @@ loss = criterion(logps, labels)
 
 
 optimizer = optim.Adam(model.parameters(), lr=0.003
-time0 = time()
+time = time()
 epochs = 2
 for e in range(epochs):
     running_loss = 0
