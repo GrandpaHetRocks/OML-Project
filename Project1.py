@@ -75,6 +75,7 @@ client['model'] = Net().to(device)
 client['optim'] = optim.SGD(client['model'].parameters(), lr=args.lr)
 
 clients=[client]
+ac=[]
 for inx, client in enumerate(clients):  #return actual image set for each client
     trainset_ind_list = list(train_group[inx]) 
     client['trainset'] = getImage(global_train, trainset_ind_list, args.local_batches)
@@ -121,3 +122,6 @@ for round in range(1,args.rounds+1):
     print('\nTest set: Average loss for {} model: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
         'client1', test_loss, correct, len(global_test_loader.dataset),
         100. * correct / len(global_test_loader.dataset)))
+    ac.append(100. * correct / len(global_test_loader.dataset))
+
+print(ac)
