@@ -23,7 +23,7 @@ class Arguments():
         self.images = 10000
         self.clients = 10
         self.rounds = 1
-        self.epochs = 200
+        self.epochs = 15
         self.local_batches = 64
         self.lr = 0.003
         self.torch_seed = 0 #same weights and parameters whenever the program is run
@@ -97,26 +97,26 @@ for round in range(1,args.rounds+1):
                     "client1",
                     epoch, batch_idx * args.local_batches, len(client['trainset']) * args.local_batches, 
                     100. * batch_idx / len(client['trainset']), loss))
-        client['model'].eval()    #no need to train the model while testing
-        test_loss = 0
-        correct = 0
-        with torch.no_grad():
-            for data, target in global_test_loader:
-                if(use_cuda):
-                    data,target=data.cuda(),target.cuda()
-                    #model.cuda()
-                else:
-                    data, target = data.to(device), target.to(device)
-                output = client['model'](data)
-                test_loss += F.nll_loss(output, target, reduction='sum').item() # sum up batch loss
-                pred = output.argmax(1, keepdim=True) # get the index of the max log-probability 
-                correct += pred.eq(target.view_as(pred)).sum().item()
+    client['model'].eval()    #no need to train the model while testing
+    test_loss = 0
+    correct = 0
+    with torch.no_grad():
+        for data, target in global_test_loader:
+            if(use_cuda):
+                data,target=data.cuda(),target.cuda()
+                #model.cuda()
+            else:
+                data, target = data.to(device), target.to(device)
+            output = client['model'](data)
+            test_loss += F.nll_loss(output, target, reduction='sum').item() # sum up batch loss
+            pred = output.argmax(1, keepdim=True) # get the index of the max log-probability 
+            correct += pred.eq(target.view_as(pred)).sum().item()
 
-    test_loss /= len(global_test_loader.dataset)
+test_loss /= len(global_test_loader.dataset)
 
-    print('\nTest set: Average loss for {} model: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
-        'client1', test_loss, correct, len(global_test_loader.dataset),
-        100. * correct / len(global_test_loader.dataset)))
-    ac.append(100. * correct / len(global_test_loader.dataset))
+print('\nTest set: Average loss for {} model: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
+    'client1', test_loss, correct, len(global_test_loader.dataset),
+    100. * correct / len(global_test_loader.dataset)))
+ac.append(100. * correct / len(global_test_loader.dataset))
 
 print(ac)
