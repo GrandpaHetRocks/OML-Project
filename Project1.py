@@ -56,7 +56,7 @@ for round in range(100):
             images = images.view(images.shape[0], -1)
         
             # Training pass
-            optimizer.zero_grad()
+            #optimizer.zero_grad()
             
             output = model(images)
             loss = criterion(output, labels)
