@@ -112,11 +112,11 @@ for round in range(1,args.rounds+1):
             pred = output.argmax(1, keepdim=True) # get the index of the max log-probability 
             correct += pred.eq(target.view_as(pred)).sum().item()
 
-test_loss /= len(global_test_loader.dataset)
-
-print('\nTest set: Average loss for {} model: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
-    'client1', test_loss, correct, len(global_test_loader.dataset),
-    100. * correct / len(global_test_loader.dataset)))
-ac.append(100. * correct / len(global_test_loader.dataset))
+    test_loss /= len(global_test_loader.dataset)
+    
+    print('\nTest set: Average loss for {} model: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
+        'client1', test_loss, correct, len(global_test_loader.dataset),
+        100. * correct / len(global_test_loader.dataset)))
+    ac.append(100. * correct / len(global_test_loader.dataset))
 
 print(ac)
