@@ -25,7 +25,7 @@ class Arguments():
         self.rounds = 200
         self.epochs = 2
         self.local_batches = 64
-        self.lr = 0.01
+        self.lr = 0.1
         self.torch_seed = 0 #same weights and parameters whenever the program is run
         self.log_interval = 64
         self.iid = 'iid'
