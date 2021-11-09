@@ -111,7 +111,7 @@ for round in range(1,args.rounds+1):
             else:
                 data, target = data.to(device), target.to(device)
             output = client['model'](data)
-            test_loss += F.mse_loss(output, target, reduction='sum').item() # sum up batch loss
+            test_loss += F.nll_loss(output, target, reduction='sum').item() # sum up batch loss
             pred = output.argmax(1, keepdim=True) # get the index of the max log-probability 
             correct += pred.eq(target.view_as(pred)).sum().item()
 
