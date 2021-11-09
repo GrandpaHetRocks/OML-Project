@@ -22,8 +22,8 @@ class Arguments():
     def __init__(self):
         self.images = 10000
         self.clients = 10
-        self.rounds = 200
-        self.epochs = 2
+        self.rounds = 1
+        self.epochs = 200
         self.local_batches = 64
         self.lr = 0.007
         self.torch_seed = 0 #same weights and parameters whenever the program is run
@@ -42,7 +42,7 @@ kwargs = {'num_workers': 1, 'pin_memory': True} if use_cuda else {}
 
 global_train, global_test, train_group, test_group = load_dataset(args.clients, args.iid)
 
-transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])
+transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))])
 global_test_dataset = datasets.MNIST('./', train=False, download=True, transform=transform)
 global_test_loader = DataLoader(global_test_dataset, batch_size=args.local_batches, shuffle=True)
 
