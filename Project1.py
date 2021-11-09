@@ -89,9 +89,9 @@ for round in range(1):
                   correct_count += 1
                 all_count += 1
             
-            print("Number Of Images Tested =", all_count)
-            print("\nModel Accuracy =", (correct_count/all_count))
-            ac.append((correct_count/all_count))
-            print(e)
+        print("Number Of Images Tested =", all_count)
+        print("\nModel Accuracy =", (correct_count/all_count))
+        ac.append((correct_count/all_count))
+        print(e)
 
 print(ac)
