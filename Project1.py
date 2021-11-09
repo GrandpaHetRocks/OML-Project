@@ -80,18 +80,18 @@ for round in range(1):
             with torch.no_grad():
                 logps = model(img)
         
-            # Output of the network are log-probabilities, need to take exponential for probabilities
-            ps = torch.exp(logps)
-            probab = list(ps.numpy()[0])
-            pred_label = probab.index(max(probab))
-            true_label = labels.numpy()[i]
-            if(true_label == pred_label):
-              correct_count += 1
-            all_count += 1
-        
-        print("Number Of Images Tested =", all_count)
-        print("\nModel Accuracy =", (correct_count/all_count))
-        ac.append((correct_count/all_count))
-        print(e)
+                # Output of the network are log-probabilities, need to take exponential for probabilities
+                ps = torch.exp(logps)
+                probab = list(ps.numpy()[0])
+                pred_label = probab.index(max(probab))
+                true_label = labels.numpy()[i]
+                if(true_label == pred_label):
+                  correct_count += 1
+                all_count += 1
+            
+            print("Number Of Images Tested =", all_count)
+            print("\nModel Accuracy =", (correct_count/all_count))
+            ac.append((correct_count/all_count))
+            print(e)
 
 print(ac)
