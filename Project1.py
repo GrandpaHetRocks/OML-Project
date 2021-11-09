@@ -43,7 +43,7 @@ logps = model(images)
 loss = criterion(logps, labels)
 
 
-optimizer = optim.Adam(model.parameters(), lr=0.01)
+optimizer = optim.Adam(model.parameters(), lr=0.1)
 time0 = time()
 epochs = 2
 for e in range(epochs):
