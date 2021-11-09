@@ -43,8 +43,8 @@ logps = model(images)
 loss = criterion(logps, labels)
 
 
-optimizer = optim.Adam(model.parameters(), lr=0.003
-time = time()
+optimizer = optim.SGD(model.parameters(), lr=0.003, momentum=0.9)
+time0 = time()
 epochs = 2
 for e in range(epochs):
     running_loss = 0
