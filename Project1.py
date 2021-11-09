@@ -70,7 +70,7 @@ client={}
     
 torch.manual_seed(args.torch_seed)
 client['model'] = Net().to(device)
-client['optim'] = optim.SGD(client['model'].parameters(), lr=args.lr)
+client['optim'] = optim.SGD(client['model'].parameters(), lr=args.lr, momentum=0.9)
 
 clients=[client]
 ac=[]
