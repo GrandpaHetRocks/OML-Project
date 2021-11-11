@@ -80,6 +80,7 @@ for e in range(epochs):
         img = images[i].view(1, 784)
         # Turn off gradients to speed up this part
         with torch.no_grad():
+            model.eval()
             logps = model(img)
     
         # Output of the network are log-probabilities, need to take exponential for probabilities
