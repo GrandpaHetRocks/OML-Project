@@ -44,7 +44,7 @@ logps = model(images)
 loss = criterion(logps, labels)
 
 
-optimizer = optim.Adam(model.parameters(), lr=0.001, betas=(0.9, 0.999))
+optimizer = optim.SGD(model.parameters(), lr=0.01)
 
 epochs = 100
 ac=[]
