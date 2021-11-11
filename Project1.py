@@ -47,7 +47,7 @@ loss = criterion(logps, labels)
 optimizer = optim.SGD(model.parameters(), lr=0.01)
 
 epochs = 100
-ac=[]
+ac=[0]
 
 
 for e in range(epochs):
