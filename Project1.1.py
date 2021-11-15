@@ -77,7 +77,7 @@ for e in range(epochs):
         
     else:
         print("Epoch {} - Training loss: {}".format(e, running_loss/len(trainloader)))
-        loss_train.append(running_loss)
+        loss_train.append(running_loss/len(trainloader))
 #print("\nTraining Time (in minutes) =",(time()-time0)/60)
         correct_count, all_count = 0, 0
         for images,labels in trainloader:
@@ -130,7 +130,7 @@ for e in range(epochs):
         all_count += 1
     else:
         print("Epoch {} - Validation loss: {}".format(e, running_loss/len(valloader)))
-        loss_val.append(running_loss)
+        loss_val.append(running_loss/len(valloader))
         
         print("Number Of Images Tested (Validation)=", all_count)
         print("\nModel Accuracy (Validation)=", (correct_count/all_count))
