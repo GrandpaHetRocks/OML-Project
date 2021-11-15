@@ -136,7 +136,11 @@ for e in range(epochs):
         print("\nModel Accuracy (Validation)=", (correct_count/all_count))
         ac_val.append((correct_count/all_count))
 
+print("Validation Accuracy")
 print(ac_val)
+print("Training Accuracy")
 print(ac_train)
+print("Validation Loss")
 print(loss_val)
+print("Training Loss")
 print(loss_train)
