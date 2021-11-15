@@ -37,11 +37,11 @@ print(model)
 
 
 criterion = nn.NLLLoss()
-images, labels = next(iter(trainloader))
-images = images.view(images.shape[0], -1)
+# images, labels = next(iter(trainloader))
+# images = images.view(images.shape[0], -1)
 
-logps = model(images)
-loss = criterion(logps, labels)
+# logps = model(images)
+# loss = criterion(logps, labels)
 
 
 optimizer = optim.Adagrad(model.parameters(), lr=0.01, eps=1e-8)
@@ -107,10 +107,11 @@ for e in range(epochs):
     for images,labels in valloader:
 
       images = images.view(images.shape[0], -1)
-      model.eval()
-      output = model(images)
-      loss = criterion(output, labels)
-      running_loss += loss.item()
+      with torch.no_grad():
+          model.eval()
+          output = model(images)
+          loss = criterion(output, labels)
+          running_loss += loss.item()
 
       for i in range(len(labels)):
         img = images[i].view(1, 784)
